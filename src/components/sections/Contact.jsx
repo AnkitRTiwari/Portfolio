@@ -17,7 +17,7 @@ export const Contact = () => {
         import.meta.env.VITE_SERVICE_ID,
         import.meta.env.VITE_TEMPLATE_ID,
         e.target,
-        { publicKey: import.meta.env.VITE_EmailJS_KEY }
+        { publicKey: import.meta.env.VITE_EMAILJS_KEY }
       )
       .then(() => {
         alert("Thankyou so much for reaching out...!");
