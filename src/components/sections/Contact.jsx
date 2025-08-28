@@ -11,13 +11,13 @@ export const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log(import.meta.env.VITE_SERVICE_ID);
     emailjs
       .sendForm(
         import.meta.env.VITE_SERVICE_ID,
         import.meta.env.VITE_TEMPLATE_ID,
         e.target,
-        { publicKey: import.meta.env.VITE_PUBLIC_KEY }
+        import.meta.env.VITE_PUBLIC_KEY
       )
       .then(() => {
         alert("Thankyou so much for reaching out...!");
