@@ -12,6 +12,8 @@ export const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(import.meta.env.VITE_SERVICE_ID);
+    console.log(import.meta.env.VITE_TEMPLATE_ID);
+    console.log(import.meta.env.VITE_EMAILJS_KEY);
     emailjs
       .sendForm(
         import.meta.env.VITE_SERVICE_ID,
