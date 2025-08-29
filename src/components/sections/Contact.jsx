@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { RevealOnScroll } from "../RevealOnScroll";
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -11,21 +11,27 @@ export const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(import.meta.env.VITE_SERVICE_ID);
-    console.log(import.meta.env.VITE_TEMPLATE_ID);
-    console.log(import.meta.env.VITE_EMAILJS_KEY);
+    console.log(import.meta.env.VITE_EMAILJS_SERVICE_ID);
+
     emailjs
-      .sendForm(
-        import.meta.env.VITE_SERVICE_ID,
-        import.meta.env.VITE_TEMPLATE_ID,
-        e.target,
-        { publicKey: import.meta.env.VITE_EMAILJS_KEY }
+      .send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
       .then(() => {
         alert("Thankyou so much for reaching out...!");
         setFormData({ name: "", email: "", message: "" });
       })
-      .catch(() => alert("Oops! Something went wrong. Please try again."));
+      .catch((error) => {
+        alert("Oops! Something went wrong. Please try again.");
+        console.error("EmailJS error:", error);
+      });
   };
 
   return (
