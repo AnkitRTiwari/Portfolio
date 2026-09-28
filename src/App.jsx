@@ -16,11 +16,17 @@ import "./index.css";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [loaderDone, setLoaderDone] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <>
-      {!isLoaded && <LoadingScreen onComplete={() => setIsLoaded(true)} />}
+      {!loaderDone && (
+        <LoadingScreen
+          onReveal={() => setIsLoaded(true)}
+          onDone={() => setLoaderDone(true)}
+        />
+      )}
       <div
         className={`min-h-screen transition-opacity duration-700 ${
           isLoaded ? "opacity-100" : "opacity-0"
