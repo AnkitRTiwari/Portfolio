@@ -7,7 +7,7 @@ import { profile } from "../../data/portfolio";
 import emailjs from "@emailjs/browser";
 
 const inputClass =
-  "w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 transition focus:outline-none focus:border-blue-500 focus:bg-blue-500/5";
+  "w-full bg-overlay/5 border border-overlay/10 rounded-lg px-4 py-3 text-fg placeholder:text-fg-subtle transition focus:outline-none focus:border-accent focus:bg-accent/5";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -51,10 +51,10 @@ export const Contact = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-5 gap-10 lg:gap-16">
         <Reveal variant="left" className="md:col-span-2 space-y-6">
-          <h3 className="text-2xl font-bold text-white">
+          <h3 className="text-2xl font-bold text-fg">
             Let's build something together.
           </h3>
-          <p className="text-gray-400">
+          <p className="text-fg-muted">
             Have a project in mind, a role to discuss, or just want to say
             hello? Send a message and I'll get back to you.
           </p>
@@ -62,15 +62,15 @@ export const Contact = () => {
           <div className="space-y-4">
             <a
               href={`mailto:${profile.email}`}
-              className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors"
+              className="flex items-center gap-3 text-fg-body hover:text-fg transition-colors"
             >
-              <span className="p-2.5 rounded-lg bg-blue-500/10 text-blue-400">
+              <span className="p-2.5 rounded-lg bg-accent/10 text-link">
                 <MailIcon className="w-5 h-5" />
               </span>
               {profile.email}
             </a>
-            <p className="flex items-center gap-3 text-gray-300">
-              <span className="p-2.5 rounded-lg bg-blue-500/10 text-blue-400">
+            <p className="flex items-center gap-3 text-fg-body">
+              <span className="p-2.5 rounded-lg bg-accent/10 text-link">
                 <MapPinIcon className="w-5 h-5" />
               </span>
               {profile.location}
@@ -82,7 +82,7 @@ export const Contact = () => {
 
         <Reveal variant="right" delay={120} className="md:col-span-3">
           <form
-            className="space-y-5 rounded-2xl border border-white/10 bg-[#0b0d14]/80 p-6 md:p-8"
+            className="space-y-5 rounded-2xl border border-overlay/10 bg-surface/80 p-6 md:p-8"
             onSubmit={handleSubmit}
           >
             <div>
@@ -136,23 +136,23 @@ export const Contact = () => {
             <button
               type="submit"
               disabled={status === "sending"}
-              className="w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-medium transition hover:-translate-y-0.5 hover:bg-blue-600 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+              className="w-full bg-accent text-white py-3 px-6 rounded-lg font-medium transition hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
             >
               {status === "sending" ? "Sending..." : "Send Message"}
             </button>
 
             <div aria-live="polite">
               {status === "success" && (
-                <p className="text-sm text-emerald-400">
+                <p className="text-sm text-success">
                   Thank you so much for reaching out! I'll reply soon.
                 </p>
               )}
               {status === "error" && (
-                <p className="text-sm text-red-400">
+                <p className="text-sm text-danger">
                   Something went wrong. Please try again, or email me at{" "}
                   <a
                     href={`mailto:${profile.email}`}
-                    className="underline hover:text-red-300"
+                    className="underline hover:text-danger-hover"
                   >
                     {profile.email}
                   </a>

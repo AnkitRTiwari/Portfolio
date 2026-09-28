@@ -42,7 +42,7 @@ export const Typewriter = ({ phrases, start = true }) => {
       <span className="sr-only">{phrases.join(", ")}</span>
       <span aria-hidden="true">
         {text}
-        <span className="animate-blink text-cyan-400">|</span>
+        <span className="animate-blink text-highlight">|</span>
       </span>
     </>
   );

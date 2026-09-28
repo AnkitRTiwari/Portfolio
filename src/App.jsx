@@ -24,21 +24,25 @@ function App() {
       <div
         className={`min-h-screen transition-opacity duration-700 ${
           isLoaded ? "opacity-100" : "opacity-0"
-        } text-gray-100`}
+        } text-fg-soft`}
       >
         <AnimatedBackground />
         <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-        <main className="relative z-10">
-          <Home isLoaded={isLoaded} />
-          <About />
-          <Skills />
-          <Experience />
-          <Projects />
-          <Education />
-          <Contact />
-        </main>
-        <Footer />
+        {/* inert while the mobile menu is open so focus stays in the menu */}
+        <div inert={menuOpen}>
+          {/* overflow-x-clip: slide-in reveals start off to the side */}
+          <main className="relative z-10 overflow-x-clip">
+            <Home isLoaded={isLoaded} />
+            <About />
+            <Skills />
+            <Experience />
+            <Projects />
+            <Education />
+            <Contact />
+          </main>
+          <Footer />
+        </div>
       </div>
     </>
   );

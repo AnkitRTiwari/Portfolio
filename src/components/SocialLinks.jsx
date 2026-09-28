@@ -16,7 +16,7 @@ export const SocialLinks = ({ className = "" }) => (
         target={link.href.startsWith("mailto:") ? undefined : "_blank"}
         rel="noopener noreferrer"
         aria-label={link.label}
-        className="p-2.5 rounded-full border border-white/10 text-gray-400 transition hover:text-white hover:border-blue-500/50 hover:bg-blue-500/10 hover:-translate-y-0.5"
+        className="p-2.5 rounded-full border border-overlay/10 text-fg-muted transition hover:text-fg hover:border-accent/50 hover:bg-accent/10 hover:-translate-y-0.5"
       >
         <link.Icon className="w-5 h-5" />
       </a>

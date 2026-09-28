@@ -3,6 +3,11 @@ import { useEffect, useRef } from "react";
 const LINK_DISTANCE = 140;
 const MOUSE_DISTANCE = 180;
 
+const PALETTES = {
+  dark: { link: "59, 130, 246", linkAlpha: 0.22, mouse: "34, 211, 238", mouseAlpha: 0.45, dot: "rgba(147, 197, 253, 0.7)" },
+  light: { link: "37, 99, 235", linkAlpha: 0.16, mouse: "8, 145, 178", mouseAlpha: 0.4, dot: "rgba(37, 99, 235, 0.45)" },
+};
+
 /** Fixed full-page background: drifting glow orbs, a faint grid and a particle network. */
 export const AnimatedBackground = () => {
   const canvasRef = useRef(null);
@@ -41,6 +46,8 @@ export const AnimatedBackground = () => {
     };
 
     const draw = () => {
+      const palette =
+        PALETTES[document.documentElement.dataset.theme === "light" ? "light" : "dark"];
       ctx.clearRect(0, 0, width, height);
 
       for (const p of particles) {
@@ -57,7 +64,7 @@ export const AnimatedBackground = () => {
           const b = particles[j];
           const dist = Math.hypot(a.x - b.x, a.y - b.y);
           if (dist < LINK_DISTANCE) {
-            ctx.strokeStyle = `rgba(59, 130, 246, ${(1 - dist / LINK_DISTANCE) * 0.22})`;
+            ctx.strokeStyle = `rgba(${palette.link}, ${(1 - dist / LINK_DISTANCE) * palette.linkAlpha})`;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
@@ -68,7 +75,7 @@ export const AnimatedBackground = () => {
         if (mouse.x !== null) {
           const dist = Math.hypot(a.x - mouse.x, a.y - mouse.y);
           if (dist < MOUSE_DISTANCE) {
-            ctx.strokeStyle = `rgba(34, 211, 238, ${(1 - dist / MOUSE_DISTANCE) * 0.45})`;
+            ctx.strokeStyle = `rgba(${palette.mouse}, ${(1 - dist / MOUSE_DISTANCE) * palette.mouseAlpha})`;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(mouse.x, mouse.y);
@@ -77,7 +84,7 @@ export const AnimatedBackground = () => {
         }
       }
 
-      ctx.fillStyle = "rgba(147, 197, 253, 0.7)";
+      ctx.fillStyle = palette.dot;
       for (const p of particles) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
@@ -111,6 +118,15 @@ export const AnimatedBackground = () => {
     };
     const onVisibility = () => (document.hidden ? pause() : play());
 
+    // a static (reduced-motion) canvas must be redrawn when the theme changes
+    const themeObserver = new MutationObserver(() => {
+      if (reduceMotion) draw();
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
     resize();
     if (reduceMotion) draw();
     else play();
@@ -122,6 +138,7 @@ export const AnimatedBackground = () => {
 
     return () => {
       pause();
+      themeObserver.disconnect();
       window.removeEventListener("resize", onResize);
       window.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseleave", onMouseLeave);

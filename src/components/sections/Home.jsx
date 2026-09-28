@@ -97,7 +97,7 @@ const CodeCard = () => (
     {chips.map((chip) => (
       <div
         key={chip.label}
-        className={`absolute ${chip.position} animate-float flex items-center gap-2 rounded-xl border border-white/10 bg-[#0b0d14]/95 px-3 py-2 text-sm font-medium text-gray-200 shadow-lg`}
+        className={`absolute ${chip.position} animate-float flex items-center gap-2 rounded-xl border border-overlay/10 bg-surface/95 px-3 py-2 text-sm font-medium text-fg-soft shadow-lg`}
         style={{ animationDelay: chip.delay }}
       >
         <span className={`h-2 w-2 rounded-full ${chip.dot}`} />
@@ -119,7 +119,7 @@ export const Home = ({ isLoaded }) => {
         <div className="grid lg:grid-cols-[1.15fr_1fr] gap-16 items-center">
           <div>
             <div
-              className="hero-item inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-gray-300 mb-8"
+              className="hero-item inline-flex items-center gap-2 rounded-full border border-overlay/10 bg-overlay/5 px-4 py-1.5 text-sm text-fg-body mb-8"
               style={{ "--i": 0 }}
             >
               <span className="relative flex h-2 w-2">
@@ -135,30 +135,30 @@ export const Home = ({ isLoaded }) => {
             >
               Hi, I'm
               <br />
-              <span className="bg-gradient-to-r from-blue-500 via-sky-400 to-cyan-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-accent to-highlight bg-clip-text text-transparent">
                 {profile.name}
               </span>
             </h1>
 
             <p
-              className="hero-item text-xl md:text-2xl font-medium text-gray-200 mb-4"
+              className="hero-item text-xl md:text-2xl font-medium text-fg-soft mb-4"
               style={{ "--i": 2 }}
             >
               {profile.role}
             </p>
 
             <p
-              className="hero-item font-mono text-base md:text-lg text-gray-400 mb-6 min-h-[1.75em]"
+              className="hero-item font-mono text-base md:text-lg text-fg-muted mb-6 min-h-[1.75em]"
               style={{ "--i": 3 }}
             >
-              <span className="text-cyan-400">&gt;</span> I build{" "}
-              <span className="text-white">
+              <span className="text-highlight">&gt;</span> I build{" "}
+              <span className="text-fg">
                 <Typewriter phrases={profile.buildPhrases} start={isLoaded} />
               </span>
             </p>
 
             <p
-              className="hero-item text-gray-400 text-lg mb-10 max-w-xl"
+              className="hero-item text-fg-muted text-lg mb-10 max-w-xl"
               style={{ "--i": 4 }}
             >
               {profile.tagline}
@@ -170,13 +170,13 @@ export const Home = ({ isLoaded }) => {
             >
               <a
                 href="#projects"
-                className="bg-blue-500 text-white py-3 px-6 rounded-lg font-medium transition hover:-translate-y-0.5 hover:bg-blue-600 hover:shadow-[0_0_24px_rgba(59,130,246,0.5)]"
+                className="bg-accent text-white py-3 px-6 rounded-lg font-medium transition hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(59,130,246,0.5)]"
               >
                 View My Work
               </a>
               <a
                 href="#contact"
-                className="border border-blue-500/50 text-blue-400 py-3 px-6 rounded-lg font-medium transition hover:-translate-y-0.5 hover:bg-blue-500/10 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]"
+                className="border border-accent/50 text-link py-3 px-6 rounded-lg font-medium transition hover:-translate-y-0.5 hover:bg-accent/10 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]"
               >
                 Get In Touch
               </a>
@@ -184,7 +184,7 @@ export const Home = ({ isLoaded }) => {
                 href={profile.resume}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border border-white/15 text-gray-200 py-3 px-6 rounded-lg font-medium transition hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/5"
+                className="inline-flex items-center gap-2 border border-overlay/15 text-fg-soft py-3 px-6 rounded-lg font-medium transition hover:-translate-y-0.5 hover:border-overlay/30 hover:bg-overlay/5"
               >
                 <DownloadIcon className="w-4 h-4" />
                 Resume
@@ -196,7 +196,7 @@ export const Home = ({ isLoaded }) => {
               style={{ "--i": 6 }}
             >
               <SocialLinks />
-              <span className="inline-flex items-center gap-1.5 text-sm text-gray-500">
+              <span className="inline-flex items-center gap-1.5 text-sm text-fg-subtle">
                 <MapPinIcon className="w-4 h-4" />
                 {profile.location}
               </span>
@@ -219,10 +219,10 @@ export const Home = ({ isLoaded }) => {
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className="flex flex-col-reverse rounded-2xl border border-white/10 bg-[#0b0d14]/80 p-5 transition hover:border-blue-500/40"
+              className="flex flex-col-reverse rounded-2xl border border-overlay/10 bg-surface/80 p-5 transition hover:border-accent/40"
             >
-              <dt className="text-sm text-gray-400 mt-1">{stat.label}</dt>
-              <dd className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">
+              <dt className="text-sm text-fg-muted mt-1">{stat.label}</dt>
+              <dd className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-accent to-highlight bg-clip-text text-transparent">
                 <CountUp value={stat.value} start={isLoaded} />
               </dd>
             </div>

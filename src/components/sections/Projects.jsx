@@ -25,28 +25,28 @@ export const Projects = () => {
                 <span
                   className={`font-mono text-xs uppercase tracking-wider rounded-full px-3 py-1 ${
                     project.type === "Professional"
-                      ? "text-cyan-300 bg-cyan-400/10"
-                      : "text-blue-300 bg-blue-500/10"
+                      ? "text-highlight bg-highlight/10"
+                      : "text-link bg-accent/10"
                   }`}
                 >
                   {project.type}
                 </span>
                 {project.context && (
-                  <span className="text-xs text-gray-500 text-right">
+                  <span className="text-xs text-fg-subtle text-right">
                     {project.context}
                   </span>
                 )}
               </div>
 
-              <h3 className="text-2xl font-bold text-white mb-3 transition-colors group-hover:text-blue-400">
+              <h3 className="text-2xl font-bold text-fg mb-3 transition-colors group-hover:text-link">
                 {project.title}
               </h3>
-              <p className="text-gray-400 mb-5">{project.description}</p>
+              <p className="text-fg-muted mb-5">{project.description}</p>
 
-              <ul className="space-y-2 text-sm text-gray-300 mb-6 flex-1">
+              <ul className="space-y-2 text-sm text-fg-body mb-6 flex-1">
                 {project.highlights.map((highlight) => (
                   <li key={highlight} className="flex gap-3">
-                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-cyan-400" />
+                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-highlight" />
                     <span>{highlight}</span>
                   </li>
                 ))}
@@ -58,19 +58,19 @@ export const Projects = () => {
                 ))}
               </div>
 
-              <div className="pt-5 border-t border-white/10">
+              <div className="pt-5 border-t border-overlay/10">
                 {project.link ? (
                   <a
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-medium text-blue-400 hover:text-blue-300 transition-colors"
+                    className="inline-flex items-center gap-1.5 font-medium text-link hover:text-link-hover transition-colors"
                   >
                     View Live Project
                     <ArrowUpRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
                 ) : (
-                  <span className="inline-flex items-center gap-1.5 text-sm text-gray-500">
+                  <span className="inline-flex items-center gap-1.5 text-sm text-fg-subtle">
                     <LockIcon className="w-4 h-4" />
                     Company project, not publicly available
                   </span>

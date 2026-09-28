@@ -1,8 +1,58 @@
 @import "tailwindcss";
 
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+/* Theme tokens: dark values here, light overrides below */
+@theme {
+  --color-page: #050508;
+  --color-surface: #0b0d14;
+  --color-overlay: #ffffff; /* base for translucent borders and tints */
+  --color-fg: #ffffff;
+  --color-fg-soft: #e5e7eb;
+  --color-fg-body: #d1d5db;
+  --color-fg-muted: #9ca3af;
+  --color-fg-subtle: #6b7280;
+  --color-fg-faint: #4b5563;
+  --color-accent: #3b82f6;
+  --color-accent-hover: #2563eb;
+  --color-link: #60a5fa;
+  --color-link-hover: #93c5fd;
+  --color-highlight: #22d3ee;
+  --color-success: #34d399;
+  --color-danger: #f87171;
+  --color-danger-hover: #fca5a5;
+}
+
+[data-theme="light"] {
+  --color-page: #f5f7fb;
+  --color-surface: #ffffff;
+  --color-overlay: #0f172a;
+  --color-fg: #0b1220;
+  --color-fg-soft: #1f2937;
+  --color-fg-body: #374151;
+  --color-fg-muted: #4b5563;
+  --color-fg-subtle: #6b7280;
+  --color-fg-faint: #9ca3af;
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+  --color-link: #2563eb;
+  --color-link-hover: #1e40af;
+  --color-highlight: #0e7490;
+  --color-success: #047857;
+  --color-danger: #dc2626;
+  --color-danger-hover: #b91c1c;
+
+  --orb-strength: 0.45;
+  --grid-line: rgba(15, 23, 42, 0.06);
+  color-scheme: light;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 4rem;
+  color-scheme: dark;
+  --orb-strength: 1;
+  --grid-line: rgba(255, 255, 255, 0.035);
 }
 
 html,
@@ -10,8 +60,15 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Space Grotesk", sans-serif;
-  background: #050508;
-  color: #f3f4f6;
+  background: var(--color-page);
+  color: var(--color-fg);
+}
+
+/* Theme switch: circular reveal driven from ThemeToggle */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
 
 @layer utilities {
@@ -72,7 +129,7 @@ body {
   top: -12%;
   left: -8%;
   background: #2563eb;
-  opacity: 0.32;
+  opacity: calc(0.32 * var(--orb-strength));
   animation: drift-1 24s ease-in-out infinite alternate;
 }
 
@@ -82,7 +139,7 @@ body {
   bottom: -18%;
   right: -8%;
   background: #0891b2;
-  opacity: 0.3;
+  opacity: calc(0.3 * var(--orb-strength));
   animation: drift-2 28s ease-in-out infinite alternate;
 }
 
@@ -92,7 +149,7 @@ body {
   top: 35%;
   left: 40%;
   background: #4f46e5;
-  opacity: 0.18;
+  opacity: calc(0.18 * var(--orb-strength));
   animation: drift-3 32s ease-in-out infinite alternate;
 }
 
@@ -115,8 +172,8 @@ body {
 }
 
 .bg-grid {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 80%);
 }
@@ -184,6 +241,36 @@ body {
   transform: scaleY(1);
 }
 
+/* ---------- Mobile menu: circle grows out of the hamburger button ---------- */
+
+.mobile-menu {
+  --menu-origin: calc(100% - 2.75rem) 2rem;
+  clip-path: circle(0% at var(--menu-origin));
+  visibility: hidden;
+  transition: clip-path 0.5s cubic-bezier(0.77, 0, 0.18, 1),
+    visibility 0s linear 0.5s;
+}
+
+.mobile-menu[data-open="true"] {
+  clip-path: circle(150% at var(--menu-origin));
+  visibility: visible;
+  transition: clip-path 0.7s cubic-bezier(0.77, 0, 0.18, 1), visibility 0s;
+}
+
+.mobile-menu-item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.mobile-menu[data-open="true"] .mobile-menu-item {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(180ms + var(--i, 0) * 60ms);
+}
+
 /* ---------- Reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -194,6 +281,13 @@ body {
   .orb,
   .animate-float {
     animation: none;
+  }
+
+  .mobile-menu,
+  .mobile-menu[data-open="true"],
+  .mobile-menu-item,
+  .mobile-menu[data-open="true"] .mobile-menu-item {
+    transition: none;
   }
 
   .hero-item,

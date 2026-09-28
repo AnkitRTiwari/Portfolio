@@ -49,6 +49,10 @@ All text on the site (profile, stats, skills, experience, projects, education an
 
 To update the resume, replace `public/resume.pdf` with the new file, keeping the same name.
 
+## Themes
+
+The site has dark (default) and light themes, switched with the sun/moon button in the navbar. Colours are theme tokens defined in [`src/index.css`](src/index.css): the dark values sit in `@theme` and the light overrides under `[data-theme="light"]`. Use the token classes (`text-fg`, `text-fg-muted`, `bg-surface`, `border-overlay/10`, `text-link`, `bg-accent`, …) instead of fixed colours so new UI works in both themes.
+
 ## Project structure
 
 ```
@@ -64,6 +68,7 @@ src/
     LoadingScreen.jsx
     AnimatedBackground.jsx  # Drifting glows + canvas particle network
     Navbar.jsx              # Scroll progress bar, active-section highlight
+    ThemeToggle.jsx         # Dark/light switch (saved in localStorage)
     MobileMenu.jsx
     Footer.jsx
     Reveal.jsx              # Scroll-triggered entrance animations

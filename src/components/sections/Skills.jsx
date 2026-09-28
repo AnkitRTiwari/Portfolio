@@ -16,7 +16,7 @@ export const Skills = () => {
         {skillGroups.map((group, i) => (
           <Reveal key={group.title} variant="zoom" delay={(i % 3) * 120}>
             <Card className="p-6 h-full">
-              <h3 className="text-lg font-bold text-white mb-4">
+              <h3 className="text-lg font-bold text-fg mb-4">
                 {group.title}
               </h3>
               <div className="flex flex-wrap gap-2">

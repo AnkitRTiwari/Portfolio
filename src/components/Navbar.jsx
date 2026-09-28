@@ -1,9 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { navLinks, profile } from "../data/portfolio";
+import { useActiveSection } from "../hooks/useActiveSection";
+import { ThemeToggle } from "./ThemeToggle";
+
+const barClass =
+  "absolute left-1/2 top-1/2 h-0.5 -ml-2.5 -mt-px rounded-full bg-fg transition-all duration-300 ease-[cubic-bezier(0.77,0,0.18,1)] motion-reduce:transition-none";
 
 export const Navbar = ({ menuOpen, setMenuOpen }) => {
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState("");
+  const active = useActiveSection();
   const progressRef = useRef(null);
 
   useEffect(() => {
@@ -38,83 +43,88 @@ export const Navbar = ({ menuOpen, setMenuOpen }) => {
     };
   }, []);
 
-  // Highlight the link for the section crossing the middle of the screen
-  useEffect(() => {
-    const sections = ["#home", ...navLinks.map((link) => link.href)]
-      .map((href) => document.querySelector(href))
-      .filter(Boolean);
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
-        }
-      },
-      { rootMargin: "-45% 0px -50% 0px" }
-    );
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <nav
       className={`fixed top-0 w-full z-40 border-b transition-colors duration-300 ${
-        scrolled
-          ? "bg-[rgba(5,5,8,0.85)] backdrop-blur-lg border-white/10 shadow-lg"
+        scrolled && !menuOpen
+          ? "bg-page/85 backdrop-blur-lg border-overlay/10 shadow-lg"
           : "bg-transparent border-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center h-16">
-          <a href="#home" className="font-mono text-xl font-bold text-white">
-            A<span className="text-blue-500">.T</span>{" "}
-            <span className="text-[10px] text-gray-400">portfolio</span>
+          <a href="#home" className="font-mono text-xl font-bold text-fg">
+            A<span className="text-accent">.T</span>{" "}
+            <span className="text-[10px] text-fg-muted">portfolio</span>
           </a>
 
-          <button
-            className="w-7 h-5 relative cursor-pointer z-40 lg:hidden"
-            onClick={() => setMenuOpen((prev) => !prev)}
-            aria-label="Open Menu"
-          >
-            &#9776;
-          </button>
-
-          <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => {
-              const isActive = active === link.href;
-              return (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  aria-current={isActive ? "true" : undefined}
-                  className={`relative py-1 transition-colors ${
-                    isActive ? "text-white" : "text-gray-400 hover:text-white"
-                  }`}
-                >
-                  {link.label}
-                  <span
-                    className={`absolute left-0 -bottom-0.5 h-0.5 w-full origin-left rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-transform duration-300 ${
-                      isActive ? "scale-x-100" : "scale-x-0"
+          <div className="flex items-center gap-4 lg:gap-8">
+            <div className="hidden lg:flex items-center gap-8">
+              {navLinks.map((link) => {
+                const isActive = active === link.href;
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    aria-current={isActive ? "true" : undefined}
+                    className={`relative py-1 transition-colors ${
+                      isActive ? "text-fg" : "text-fg-muted hover:text-fg"
                     }`}
-                  />
-                </a>
-              );
-            })}
-            <a
-              href={profile.resume}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border border-blue-500/50 text-blue-400 py-1.5 px-4 rounded-lg text-sm font-medium transition hover:bg-blue-500/10"
+                  >
+                    {link.label}
+                    <span
+                      className={`absolute left-0 -bottom-0.5 h-0.5 w-full origin-left rounded-full bg-gradient-to-r from-accent to-highlight transition-transform duration-300 ${
+                        isActive ? "scale-x-100" : "scale-x-0"
+                      }`}
+                    />
+                  </a>
+                );
+              })}
+              <a
+                href={profile.resume}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-accent/50 text-link py-1.5 px-4 rounded-lg text-sm font-medium transition hover:bg-accent/10"
+              >
+                Resume
+              </a>
+            </div>
+
+            <ThemeToggle />
+
+            <button
+              type="button"
+              className="relative h-10 w-10 cursor-pointer rounded-full border border-overlay/10 transition hover:border-accent/50 hover:bg-accent/10 lg:hidden"
+              onClick={() => setMenuOpen((prev) => !prev)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
             >
-              Resume
-            </a>
+              <span
+                className={`${barClass} w-5 ${
+                  menuOpen ? "rotate-45" : "-translate-y-1.5"
+                }`}
+              />
+              <span
+                className={`${barClass} ${
+                  menuOpen ? "w-0 opacity-0" : "w-3.5"
+                }`}
+              />
+              <span
+                className={`${barClass} w-5 ${
+                  menuOpen ? "-rotate-45" : "translate-y-1.5"
+                }`}
+              />
+            </button>
           </div>
         </div>
       </div>
 
       <div
         ref={progressRef}
-        className="absolute left-0 bottom-0 h-0.5 w-full origin-left bg-gradient-to-r from-blue-500 to-cyan-400"
+        className={`absolute left-0 bottom-0 h-0.5 w-full origin-left bg-gradient-to-r from-accent to-highlight transition-opacity ${
+          menuOpen ? "opacity-0" : ""
+        }`}
         style={{ transform: "scaleX(0)" }}
       />
     </nav>
