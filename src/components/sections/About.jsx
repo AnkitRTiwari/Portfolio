@@ -1,96 +1,68 @@
-import { RevealOnScroll } from "../RevealOnScroll";
+import { Reveal } from "../Reveal";
+import { Card, Section, SectionHeading } from "../ui";
+import { about, profile } from "../../data/portfolio";
+
+const facts = [
+  { label: "Based in", value: profile.location },
+  { label: "Currently", value: profile.currently },
+  { label: "Experience", value: "4+ years, full stack" },
+  { label: "Email", value: profile.email, href: `mailto:${profile.email}` },
+];
 
 export const About = () => {
-  const frontendSkills = [
-    "React",
-    "Javascript",
-    "TypeScript",
-    "TailwindCSS",
-    "Redux",
-  ];
-
   return (
-    <section
-      id="about"
-      className="min-h-screen flex items-center justify-center py-20"
-    >
-      <RevealOnScroll>
-        <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent text-center">
-            {" "}
-            About Me
-          </h2>
+    <Section id="about">
+      <SectionHeading index="01" title="About" subtitle="About Me" />
 
-          <div className="rounded-xl p-8 border-white/10 border hover:-translate-y-1 transition-all">
-            <p className="text-gray-300 mb-6">
-              Streamlined application development by developing reusable and
-              generic components using React, resulting in a 30% reduction in
-              development time • Created a scalable UI theme with Tailwind CSS
-              in React, improving design consistency and development efficiency.
-            </p>
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+        <div className="lg:col-span-3">
+          <Reveal variant="left" className="space-y-5 text-lg text-gray-300">
+            {about.paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </Reveal>
 
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              className="bg-blue-500/10 text-red-500 py-1 px-3 rounded-full text-sm hover:bg-blue-500/20 hover:shadow-[0_2px_8px_rgba(59,130,246,0.2)] hover:-translate-y-1 transition-all hover:text-white"
-            >
-              View Resume
-            </a>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="rounded-xl p-6 hover:-translate-y-1 transition-all">
-                <h3 className="text-xl font-bold mb-4"> Frontend</h3>
-                <div className="flex flex-wrap gap-2">
-                  {frontendSkills.map((tech, key) => (
-                    <span
-                      key={key}
-                      className="bg-blue-500/10 text-blue-500 py-1 px-3 rounded-full text-sm hover:bg-blue-500/20 hover:shadow-[0_2px_8px_rgba(59,130,246,0.2)] hover:-translate-y-1 transition-all"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+          <Reveal variant="left" delay={150}>
+            <dl className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 border-t border-white/10 pt-8">
+              {facts.map((fact) => (
+                <div key={fact.label}>
+                  <dt className="font-mono text-xs uppercase tracking-wider text-gray-500">
+                    {fact.label}
+                  </dt>
+                  <dd className="mt-1 text-gray-200">
+                    {fact.href ? (
+                      <a
+                        href={fact.href}
+                        className="hover:text-blue-400 transition-colors"
+                      >
+                        {fact.value}
+                      </a>
+                    ) : (
+                      fact.value
+                    )}
+                  </dd>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-            <div className="p-6 rounded-xl border-white/10 border hover:-translate-y-1 transition-all">
-              <h3 className="text-xl font-bold mb-4"> 🏫 Education </h3>
-              <ul className="list-disc list-inside text-gray-300 space-y-2">
-                <li>
-                  <strong>
-                    JavaScript Algorithms and Data Structures (Beta){" "}
-                  </strong>{" "}
-                  certification from Free Code camp.
-                </li>
-                <li>
-                  <strong> B com </strong> - Sydenham College of Commerce and
-                  Economics (2015 - 2018)
-                </li>
-              </ul>
-            </div>
-            <div className="p-6 rounded-xl border-white/10 border hover:-translate-y-1 transition-all">
-              <h3 className="text-xl font-bold mb-4"> 💼 Work Experience </h3>
-              <div className="space-y-4 text-gray-300">
-                <div>
-                  <h4 className="font-semibold">
-                    {" "}
-                    Software Engineer at Zeal Interactive Service (2022 -
-                    Present){" "}
-                  </h4>
-                  <p>
-                    Collaborated with product managers, designers, and backend
-                    teams to translate UI/UX requirements into scalable React
-                    components, ensuring smooth integration with REST APIs and
-                    consistent user experience across devices
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+              ))}
+            </dl>
+          </Reveal>
         </div>
-      </RevealOnScroll>
-    </section>
+
+        <div className="lg:col-span-2 space-y-5">
+          {about.focus.map((item, i) => (
+            <Reveal key={item.title} variant="right" delay={i * 120}>
+              <Card className="p-6">
+                <div className="flex items-baseline gap-3 mb-2">
+                  <span className="font-mono text-sm text-cyan-400">
+                    0{i + 1}
+                  </span>
+                  <h3 className="text-xl font-bold text-white">{item.title}</h3>
+                </div>
+                <p className="text-gray-400">{item.description}</p>
+              </Card>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </Section>
   );
 };

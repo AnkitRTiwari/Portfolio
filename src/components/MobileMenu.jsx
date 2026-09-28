@@ -1,9 +1,14 @@
+import { navLinks, profile } from "../data/portfolio";
+
 export const MobileMenu = ({ menuOpen, setMenuOpen }) => {
+  const itemClass = `text-2xl font-semibold my-4 transform transition-all duration-300 ${
+    menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+  }`;
+
   return (
     <div
-      className={`fixed top-0 left-0 w-full bg-[rgba(10,10,10,0.8)] z-40 flex flex-col items-center justify-center
-                     transition-all duration-300 ease-in-out
-
+      className={`fixed top-0 left-0 w-full bg-[rgba(10,10,10,0.95)] backdrop-blur-lg z-40 flex flex-col items-center justify-center
+                     transition-all duration-300 ease-in-out lg:hidden
                      ${
                        menuOpen
                          ? "h-screen opacity-100 pointer-events-auto"
@@ -19,51 +24,24 @@ export const MobileMenu = ({ menuOpen, setMenuOpen }) => {
         &times;
       </button>
 
+      {navLinks.map((link) => (
+        <a
+          key={link.href}
+          href={link.href}
+          onClick={() => setMenuOpen(false)}
+          className={`${itemClass} text-white`}
+        >
+          {link.label}
+        </a>
+      ))}
       <a
-        href="#home"
+        href={profile.resume}
+        target="_blank"
+        rel="noopener noreferrer"
         onClick={() => setMenuOpen(false)}
-        className={`text-2xl font-semibold text-white my-4 transform transition-transform duration-300
-                    ${
-                      menuOpen
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-5"
-                    }        
-            `}
+        className={`${itemClass} text-blue-400`}
       >
-        Home
-      </a>
-      <a
-        href="#about"
-        onClick={() => setMenuOpen(false)}
-        className={`text-2xl font-semibold text-white my-4 transform transition-transform duration-300
-            ${
-              menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
-            }        
-    `}
-      >
-        About
-      </a>
-      <a
-        href="#projects"
-        onClick={() => setMenuOpen(false)}
-        className={`text-2xl font-semibold text-white my-4 transform transition-transform duration-300
-            ${
-              menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
-            }        
-    `}
-      >
-        Projects
-      </a>
-      <a
-        href="#contact"
-        onClick={() => setMenuOpen(false)}
-        className={`text-2xl font-semibold text-white my-4 transform transition-transform duration-300
-            ${
-              menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
-            }        
-    `}
-      >
-        Contact
+        Resume
       </a>
     </div>
   );

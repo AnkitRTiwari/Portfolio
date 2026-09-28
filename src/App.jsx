@@ -1,13 +1,18 @@
 import { useState } from "react";
 
 import { LoadingScreen } from "./components/LoadingScreen";
+import { AnimatedBackground } from "./components/AnimatedBackground";
 import { Navbar } from "./components/Navbar";
 import { MobileMenu } from "./components/MobileMenu";
+import { Footer } from "./components/Footer";
 import { Home } from "./components/sections/Home";
 import { About } from "./components/sections/About";
+import { Skills } from "./components/sections/Skills";
+import { Experience } from "./components/sections/Experience";
 import { Projects } from "./components/sections/Projects";
-import "./index.css";
+import { Education } from "./components/sections/Education";
 import { Contact } from "./components/sections/Contact";
+import "./index.css";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -15,18 +20,25 @@ function App() {
 
   return (
     <>
-      {!isLoaded && <LoadingScreen onComplete={() => setIsLoaded(true)} />}{" "}
+      {!isLoaded && <LoadingScreen onComplete={() => setIsLoaded(true)} />}
       <div
         className={`min-h-screen transition-opacity duration-700 ${
           isLoaded ? "opacity-100" : "opacity-0"
-        } bg-black text-gray-100`}
+        } text-gray-100`}
       >
+        <AnimatedBackground />
         <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-        <Home />
-        <About />
-        <Projects />
-        <Contact />
+        <main className="relative z-10">
+          <Home isLoaded={isLoaded} />
+          <About />
+          <Skills />
+          <Experience />
+          <Projects />
+          <Education />
+          <Contact />
+        </main>
+        <Footer />
       </div>
     </>
   );

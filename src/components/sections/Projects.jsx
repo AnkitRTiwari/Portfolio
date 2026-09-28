@@ -1,94 +1,85 @@
-import { RevealOnScroll } from "../RevealOnScroll";
+import { Reveal } from "../Reveal";
+import { Card, Section, SectionHeading, Tag } from "../ui";
+import { ArrowUpRightIcon, LockIcon } from "../Icons";
+import { projects } from "../../data/portfolio";
 
 export const Projects = () => {
   return (
-    <section
-      id="projects"
-      className="min-h-screen flex items-center justify-center py-20"
-    >
-      <RevealOnScroll>
-        <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent text-center">
-            {" "}
-            Featured Projects
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-xl border border-white/10 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-[0_2px_8px_rgba(59,130,246,0.2)] transition">
-              <h3 className="text-xl font-bold mb-2"> Countries API</h3>
-              <p className="text-gray-400 mb-4">
-                Developed and deployed a responsive Country Explorer web app and
-                implemented Dynamic Routing for country details and border
-                navigation and enhanced UX with Shimmer loading UI
-              </p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {["React", "Tailwind CSS", "API"].map((tech, key) => (
-                  <span
-                    key={key}
-                    className="
-                      bg-blue-500/10 text-blue-500 py-1 px-3 
-                      rounded-full text-sm
-                      transition
-                      hover:bg-blue-500/20 hover:-translate-y-0.5
-                      hover:shadow-[0_2px_8px_rgba(59,130,246,0.2)]
-                    "
-                  >
-                    {tech}
+    <Section id="projects">
+      <SectionHeading
+        index="04"
+        title="Projects"
+        subtitle="Featured Projects"
+        description="Production platforms I've built at work, and personal projects you can try live."
+      />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {projects.map((project, i) => (
+          <Reveal
+            key={project.title}
+            variant={i % 2 === 0 ? "left" : "right"}
+            delay={(i % 2) * 120}
+          >
+            <Card as="article" className="group flex flex-col h-full p-7">
+              <div className="flex items-center justify-between gap-4 mb-5">
+                <span
+                  className={`font-mono text-xs uppercase tracking-wider rounded-full px-3 py-1 ${
+                    project.type === "Professional"
+                      ? "text-cyan-300 bg-cyan-400/10"
+                      : "text-blue-300 bg-blue-500/10"
+                  }`}
+                >
+                  {project.type}
+                </span>
+                {project.context && (
+                  <span className="text-xs text-gray-500 text-right">
+                    {project.context}
                   </span>
+                )}
+              </div>
+
+              <h3 className="text-2xl font-bold text-white mb-3 transition-colors group-hover:text-blue-400">
+                {project.title}
+              </h3>
+              <p className="text-gray-400 mb-5">{project.description}</p>
+
+              <ul className="space-y-2 text-sm text-gray-300 mb-6 flex-1">
+                {project.highlights.map((highlight) => (
+                  <li key={highlight} className="flex gap-3">
+                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-cyan-400" />
+                    <span>{highlight}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="flex flex-wrap gap-2 mb-6">
+                {project.tech.map((tech) => (
+                  <Tag key={tech}>{tech}</Tag>
                 ))}
               </div>
 
-              <div className="flex justify-between items-center">
-                <a
-                  href="https://listofcountriesapi.netlify.app/"
-                  target="_blank"
-                  className="text-blue-400 hover:text-blue-300 transition-colors my-4"
-                >
-                  View Project →
-                </a>
-              </div>
-            </div>
-            <div
-              className="
-              glass p-6 rounded-xl border border-white/10 
-              hover:-translate-y-1 hover:border-blue-500/30
-              hover:shadow-[0_4px_20px_rgba(59,130,246,0.1)]
-              transition-all
-            "
-            >
-              <h3 className="text-xl font-bold mb-2">Focus on Today</h3>
-              <p className="text-gray-400 mb-4">
-                A task management website that allows users to add, remove, and
-                track tasks with a built-in progress tracker.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {["JavaScript", "Vanilla CSS"].map((tech, key) => (
-                  <span
-                    key={key}
-                    className="
-                      bg-blue-500/10 text-blue-500 py-1 px-3 
-                      rounded-full text-sm
-                      transition
-                      hover:bg-blue-500/20 hover:-translate-y-0.5
-                      hover:shadow-[0_2px_8px_rgba(59,130,246,0.2)]
-                    "
+              <div className="pt-5 border-t border-white/10">
+                {project.link ? (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 font-medium text-blue-400 hover:text-blue-300 transition-colors"
                   >
-                    {tech}
+                    View Live Project
+                    <ArrowUpRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 text-sm text-gray-500">
+                    <LockIcon className="w-4 h-4" />
+                    Company project, not publicly available
                   </span>
-                ))}
+                )}
               </div>
-              <div className="flex justify-between items-center">
-                <a
-                  target="_blank"
-                  href="https://polite-ganache-b87c0d.netlify.app/"
-                  className="text-blue-400 hover:text-blue-300 transition-colors my-4"
-                >
-                  View Project →
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </RevealOnScroll>
-    </section>
+            </Card>
+          </Reveal>
+        ))}
+      </div>
+    </Section>
   );
 };
