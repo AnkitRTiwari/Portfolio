@@ -158,14 +158,7 @@ export const experience = [
       "Migrated the platform's legacy styling system to Tailwind CSS, standardizing the design language across projects.",
       "Grew from code reviews and debugging sessions with senior engineers into owning features end to end.",
     ],
-    tech: [
-      "React.js",
-      "Redux",
-      "Node.js",
-      "Express.js",
-      "Tailwind CSS",
-      "JWT",
-    ],
+    tech: ["React.js", "Redux", "Node.js", "Express.js", "Tailwind CSS", "JWT"],
   },
 ];
 
@@ -184,7 +177,7 @@ export const projects = [
     tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT", "AWS EC2"],
   },
   {
-    title: "Country Explorer",
+    title: "Wanderlust",
     type: "Personal",
     description:
       "A responsive app for exploring every country in the world, powered by a public REST API and hosted on Netlify.",
@@ -194,7 +187,7 @@ export const projects = [
       "Shimmer loading states and a dark/light theme saved in Local Storage",
     ],
     tech: ["React.js", "REST API", "SCSS"],
-    link: "https://listofcountriesapi.netlify.app/",
+    link: "https://wanderlustankit.netlify.app/",
   },
   {
     title: "B2B Product Listing",
